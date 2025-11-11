@@ -22,6 +22,27 @@
     <%= javascript_importmap_tags %>
   </head>
 
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    <% if flash[:notice] %>
+      Swal.fire({
+        icon: 'success',
+        title: "<%= j flash[:notice] %>",
+        showConfirmButton: false,
+        timer: 1800
+      });
+    <% elsif flash[:alert] %>
+      Swal.fire({
+        icon: 'error',
+        title: "<%= j flash[:alert] %>",
+        showConfirmButton: true
+      });
+    <% end %>
+  });
+</script>
+
   <body>
     <%= yield %>
   </body>
