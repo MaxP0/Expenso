@@ -29,11 +29,11 @@
     <%= expense_report.status %>
   </p>
 
-  <p>
-    <strong>User:</strong>
-    <% if current_user.manager? %>
+  <% if current_user.manager? %>
+    <p>
+      <strong>User:</strong>
       <%= expense_report.user&.email %>
-    <% end %>
-  </p>
+    </p>
+  <% end %>
 
 </div>
