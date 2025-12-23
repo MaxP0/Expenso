@@ -10,6 +10,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: Expenso
+
     services:
       postgres:
         image: postgres:14
@@ -36,16 +40,13 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2
+          ruby-version: 3.3
           bundler-cache: true
-
-      - name: Install dependencies
-        run: bundle install
+          working-directory: Expenso
 
       - name: Setup database
         run: |
-          rails db:create
-          rails db:schema:load
+          bin/rails db:prepare
 
       - name: Run tests
         run: bundle exec rspec
