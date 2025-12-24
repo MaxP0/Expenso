@@ -81,11 +81,16 @@ Rails.application.configure do
 
   config.hosts.clear
 
-  # Disable ActionCable in production (not required for this application)
+  # No realtime features
   config.action_cable.mount_path = nil
   config.action_cable.url = nil
   config.action_cable.allowed_request_origins = []
 
+  # No background jobs
+  config.active_job.queue_adapter = :async
+
+  # No solid cache
+  config.cache_store = :memory_store
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
