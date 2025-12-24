@@ -11,10 +11,14 @@ services:
     preDeployCommand: bundle exec rails db:migrate
     startCommand: bundle exec puma -C config/puma.rb
     envVars:
+      - key: RACK_ENV
+        value: production
       - key: RAILS_ENV
         value: production
       - key: RAILS_LOG_LEVEL
         value: info
+      - key: WEB_CONCURRENCY
+        value: "0"
       - key: APP_HOST
         sync: false
       - key: FRONTEND_ORIGINS
@@ -37,6 +41,8 @@ services:
     buildCommand: bundle install
     startCommand: bin/jobs
     envVars:
+      - key: RACK_ENV
+        value: production
       - key: RAILS_ENV
         value: production
       - key: RAILS_LOG_LEVEL
