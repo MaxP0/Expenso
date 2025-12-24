@@ -6,6 +6,21 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
+# S3-compatible (AWS S3, Render Object Storage, MinIO, etc.)
+# Set ACTIVE_STORAGE_SERVICE=s3 and provide the env vars below.
+s3:
+  service: S3
+  access_key_id: <%= ENV.fetch("S3_ACCESS_KEY_ID") %>
+  secret_access_key: <%= ENV.fetch("S3_SECRET_ACCESS_KEY") %>
+  region: <%= ENV.fetch("S3_REGION", "us-east-1") %>
+  bucket: <%= ENV.fetch("S3_BUCKET") %>
+  endpoint: <%= ENV["S3_ENDPOINT"] %>
+  force_path_style: <%= ENV.fetch("S3_FORCE_PATH_STYLE", "true") == "true" %>
+
+# Optional: if you serve files via a CDN/custom host
+# public: true
+# host: <%= ENV["S3_PUBLIC_HOST"] %>
+
 # Use bin/rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3
