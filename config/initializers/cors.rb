@@ -4,9 +4,19 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
     raw_origins = ENV["FRONTEND_ORIGINS"] || ENV["FRONTEND_ORIGIN"] || "http://localhost:5173"
-    origin_list = raw_origins.split(",").map(&:strip).reject(&:empty?)
-    origin_list = ["http://localhost:5173"] if origin_list.empty?
-    origins(*origin_list)
+    origin_items = raw_origins.split(",").map(&:strip).reject(&:empty?)
+    origin_items = ["http://localhost:5173"] if origin_items.empty?
+
+    parsed_origins = origin_items.map do |item|
+      if item.include?("*")
+        pattern = "\\A" + Regexp.escape(item).gsub("\\*", ".*") + "\\z"
+        Regexp.new(pattern)
+      else
+        item
+      end
+    end
+
+    origins(*parsed_origins)
 
     resource "*",
       headers: :any,
